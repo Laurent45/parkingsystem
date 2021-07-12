@@ -19,7 +19,7 @@ public class FareCalculatorService {
         //TODO: Some tests are failing here. Need to check if this logic is correct
         float durationMin = (float) TimeUnit.MILLISECONDS.toMinutes(outTimeMilliSec - inTimeMilliSec);
 
-        if (durationMin > 30) {
+        if (durationMin > Fare.FREE_TIME) {
             switch (ticket.getParkingSpot().getParkingType()) {
                 case CAR: {
                     ticket.setPrice(Precision.round(durationMin / 60, 2) * Fare.CAR_RATE_PER_HOUR);
