@@ -70,8 +70,8 @@ public class ParkingDataBaseIT {
         parkingService.processExitingVehicle();
         //TODO: check that the fare generated and out time are populated correctly in the database
         Ticket ticket = ticketDAO.getTicket("ABCDEF");
-        assertNotNull(ticket.getOutTime());
         assertTrue(ticket.getPrice() >= 0);
+        assertNotNull(ticket.getOutTime());
     }
 
 }
