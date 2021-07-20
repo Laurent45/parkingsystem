@@ -34,9 +34,9 @@ public class TicketDAO {
             return ps.execute();
         } catch (Exception ex) {
             logger.error("Error fetching next available slot", ex);
+            return false;
         } finally {
             dataBaseConfig.closeConnection(con);
-            return false;
         }
     }
 
@@ -95,7 +95,7 @@ public class TicketDAO {
             ps.setString(1, vehicleRegNumber);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.wasNull()) {
+            if (!rs.next()) {
                 return false;
             }
 
