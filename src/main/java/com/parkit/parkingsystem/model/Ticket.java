@@ -1,82 +1,179 @@
 package com.parkit.parkingsystem.model;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class Ticket {
+    /**
+     * Integer that represents id ticket.
+     */
     private int id;
+    /**
+     * @see ParkingSpot
+     */
     private ParkingSpot parkingSpot;
+    /**
+     * String that represents vehicle registration number.
+     */
     private String vehicleRegNumber;
+    /**
+     * Double that represents the price's ticket.
+     */
     private double price;
+    /**
+     * In time fo ticket.
+     *
+     * @see Date
+     */
     private Date inTime;
+    /**
+     * Out time fo ticket.
+     *
+     * @see Date
+     */
     private Date outTime;
+    /**
+     * Boolean that represents if the user is a recurring user or not.
+     */
     private boolean recurringUser;
 
+    /**
+     * Constructor by default.
+     */
     public Ticket() {
     }
 
-    public Ticket(int id, ParkingSpot parkingSpot, String vehicleRegNumber, double price, Date inTime, Date outTime) {
-        this.id = id;
-        this.parkingSpot = parkingSpot;
-        this.vehicleRegNumber = vehicleRegNumber;
-        this.price = price;
-        this.inTime = inTime;
-        this.outTime = outTime;
+    /**
+     * Constructor with parameters.
+     * @param identify
+     * @param spot
+     * @param vehicleRegistrationNumber
+     * @param priceMoney
+     * @param incomingTime
+     * @param exitTime
+     */
+    public Ticket(
+            final int identify,
+            final ParkingSpot spot,
+            final String vehicleRegistrationNumber,
+            final double priceMoney,
+            final Date incomingTime,
+            final Date exitTime) {
+        this.id = identify;
+        this.parkingSpot = spot;
+        this.vehicleRegNumber = vehicleRegistrationNumber;
+        this.price = priceMoney;
+        this.inTime = incomingTime;
+        this.outTime = exitTime;
     }
 
+    /**
+     * Getter identify.
+     * @return id
+     */
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    /**
+     * Setter identify.
+     * @param identify
+     */
+    public void setId(final int identify) {
+        this.id = identify;
     }
 
+    /**
+     * Getter parking spot.
+     * @return parking spot
+     */
     public ParkingSpot getParkingSpot() {
         return parkingSpot;
     }
 
-    public void setParkingSpot(ParkingSpot parkingSpot) {
-        this.parkingSpot = parkingSpot;
+    /**
+     * Setter parking spot.
+     * @param spot
+     */
+    public void setParkingSpot(final ParkingSpot spot) {
+        this.parkingSpot = spot;
     }
 
+    /**
+     * Getter vehicle registration number.
+     * @return vehicle registration number
+     */
     public String getVehicleRegNumber() {
         return vehicleRegNumber;
     }
 
-    public void setVehicleRegNumber(String vehicleRegNumber) {
-        this.vehicleRegNumber = vehicleRegNumber;
+    /**
+     * Setter vehicle registration number.
+     * @param vehicleRegistrationNumber
+     */
+    public void setVehicleRegNumber(final String vehicleRegistrationNumber) {
+        this.vehicleRegNumber = vehicleRegistrationNumber;
     }
 
+    /**
+     * Getter price ticket.
+     * @return price ticket
+     */
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    /**
+     * Setter price ticket.
+     * @param priceMoney
+     */
+    public void setPrice(final double priceMoney) {
+        this.price = priceMoney;
     }
 
+    /**
+     * Getter incoming time.
+     * @return incoming time
+     */
     public Date getInTime() {
         return inTime;
     }
 
-    public void setInTime(Date inTime) {
-        this.inTime = inTime;
+    /**
+     * Setter incoming time.
+     * @param incomingTime
+     */
+    public void setInTime(final Date incomingTime) {
+        this.inTime = incomingTime;
     }
 
+    /**
+     * Getter exit time.
+     * @return exit time
+     */
     public Date getOutTime() {
         return outTime;
     }
 
-    public void setOutTime(Date outTime) {
-        this.outTime = outTime;
+    /**
+     * Setter exit time.
+     * @param timeExit
+     */
+    public void setOutTime(final Date timeExit) {
+        this.outTime = timeExit;
     }
 
-    public void setRecurringUser(boolean recurringUser) {
-        this.recurringUser = recurringUser;
-    }
-
+    /**
+     * Getter recurring user.
+     * @return recurring user
+     */
     public boolean isRecurringUser() {
         return recurringUser;
+    }
+    /**
+     * Setter recurring user.
+     * @param recurringUserOrNot
+     */
+    public void setRecurringUser(final boolean recurringUserOrNot) {
+        this.recurringUser = recurringUserOrNot;
     }
 }

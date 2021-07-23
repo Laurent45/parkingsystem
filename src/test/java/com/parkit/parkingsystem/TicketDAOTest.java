@@ -42,7 +42,7 @@ public class TicketDAOTest {
     public void setUp() {
         ticketDAOSUT = new TicketDAO();
         MockitoAnnotations.initMocks(this);
-        ticketDAOSUT.dataBaseConfig = mockDataBaseConfig;
+        ticketDAOSUT.setDataBaseConfig(mockDataBaseConfig);
     }
 
     @Test

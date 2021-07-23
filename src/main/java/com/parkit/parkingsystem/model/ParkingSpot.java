@@ -3,50 +3,83 @@ package com.parkit.parkingsystem.model;
 import com.parkit.parkingsystem.constants.ParkingType;
 
 public class ParkingSpot {
+    /**
+     * Number of parking spot.
+     */
     private int number;
+    /**
+     * Type of parking.
+     */
     private ParkingType parkingType;
+    /**
+     * Parking spot is available or not.
+     */
     private boolean isAvailable;
 
-    public ParkingSpot(int number, ParkingType parkingType, boolean isAvailable) {
-        this.number = number;
-        this.parkingType = parkingType;
-        this.isAvailable = isAvailable;
+    /**
+     * Constructor with parameters.
+     *
+     * @param idParkingSpot
+     * @param typeOfParking
+     * @param availability
+     */
+    public ParkingSpot(final int idParkingSpot, final ParkingType typeOfParking,
+                       final boolean availability) {
+        this.number = idParkingSpot;
+        this.parkingType = typeOfParking;
+        this.isAvailable = availability;
     }
 
+    /**
+     * Getter number fo parking spot.
+     *
+     * @return number
+     */
     public int getId() {
         return number;
     }
 
-    public void setId(int number) {
-        this.number = number;
-    }
-
+    /**
+     * Getter type of parking spot.
+     *
+     * @return parking type
+     */
     public ParkingType getParkingType() {
         return parkingType;
     }
 
-    public void setParkingType(ParkingType parkingType) {
-        this.parkingType = parkingType;
-    }
-
+    /**
+     * Getter availability of parking spot.
+     *
+     * @return if available or not
+     */
     public boolean isAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
+    /**
+     * Setter availability of parking spot.
+     *
+     * @param available
+     */
+    public void setAvailable(final boolean available) {
         isAvailable = available;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public final boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ParkingSpot that = (ParkingSpot) o;
         return number == that.number;
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return number;
     }
 }
