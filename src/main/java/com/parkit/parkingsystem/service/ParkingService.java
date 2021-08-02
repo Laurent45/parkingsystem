@@ -38,9 +38,9 @@ public class ParkingService {
     /**
      * Constructor with parameters.
      *
-     * @param inputReaderUtilInstance
-     * @param parkingSpotDAOInstance
-     * @param ticketDAOInstance
+     * @param inputReaderUtilInstance instance of InputReaderUtil
+     * @param parkingSpotDAOInstance instance of ParkingSpotDAO
+     * @param ticketDAOInstance instance of TicketDAO
      */
     public ParkingService(final InputReaderUtil inputReaderUtilInstance,
                           final ParkingSpotDAO parkingSpotDAOInstance,
@@ -65,12 +65,10 @@ public class ParkingService {
 
                 Date inTime = new Date();
                 Ticket ticket = new Ticket();
-                //ticket.setId(ticketID);
                 ticket.setParkingSpot(parkingSpot);
                 ticket.setVehicleRegNumber(vehicleRegNumber);
                 ticket.setPrice(0);
                 ticket.setInTime(inTime);
-                ticket.setOutTime(null);
                 ticket.setRecurringUser(
                         ticketDAO.searchVehicleRegistrationNumber(
                                 vehicleRegNumber));
@@ -95,7 +93,7 @@ public class ParkingService {
         }
     }
 
-    private String getVehichleRegNumber() throws Exception {
+    private String getVehichleRegNumber() {
         System.out.println(
                 "Please type the vehicle registration number "
                 + "and press enter key");

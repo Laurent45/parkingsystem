@@ -7,10 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class InteractiveShell {
-    /**
-     * Third case possible.
-     */
-    public static final int SWITCH_3 = 3;
 
     private InteractiveShell() {
         throw new IllegalStateException("Utility class");
@@ -46,7 +42,7 @@ public final class InteractiveShell {
                 case 2:
                     parkingService.processExitingVehicle();
                     break;
-                case SWITCH_3:
+                case 3:
                     System.out.println("Exiting from the system!");
                     continueApp = false;
                     break;

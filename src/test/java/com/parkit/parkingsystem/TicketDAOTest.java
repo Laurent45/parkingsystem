@@ -50,7 +50,7 @@ public class TicketDAOTest {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.SAVE_TICKET)).thenReturn(mockPrepStatement);
         when(mockPrepStatement.execute()).thenReturn(true);
-        Ticket ticket = new Ticket(1, new ParkingSpot(1, ParkingType.CAR, true), "ABCDEF", 0.00, new Date(), null);
+        Ticket ticket = new Ticket(1, new ParkingSpot(1, ParkingType.CAR, true), "ABCDEF", 0.00, new Date(), new Date());
         boolean result = ticketDAOSUT.saveTicket(ticket);
         verify(mockPrepStatement, times(1)).setInt(anyInt(), anyInt());
         verify(mockPrepStatement, times(1)).setString(anyInt(), anyString());
@@ -67,7 +67,7 @@ public class TicketDAOTest {
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
         when(mockResultSet.getDouble(3)).thenReturn(1.23);
-        when(mockResultSet.getTimestamp(anyInt())).thenReturn(null);
+        when(mockResultSet.getTimestamp(anyInt())).thenReturn(new Timestamp(System.currentTimeMillis()));
         when(mockResultSet.getString(6)).thenReturn("CAR");
 
         Ticket ticketResult = ticketDAOSUT.getTicket("ABCDEF");
@@ -76,14 +76,15 @@ public class TicketDAOTest {
         assertThat(ticketResult.getVehicleRegNumber()).isEqualTo("ABCDEF");
         assertThat(ticketResult.getParkingSpot()).isEqualTo(new ParkingSpot(1, ParkingType.CAR, false));
         assertThat(ticketResult.getPrice()).isEqualTo(1.23);
-        assertThat(ticketResult.getInTime()).isNull();
-        assertThat(ticketResult.getOutTime()).isNull();
+        assertThat(ticketResult.getInTime()).isNotNull();
+        assertThat(ticketResult.getOutTime()).isNotNull();
     }
 
     @Test
     public void givenTicket_whenUpdateTicket_thenReturnTrue() throws SQLException, ClassNotFoundException {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.UPDATE_TICKET)).thenReturn(mockPrepStatement);
+        when(mockPrepStatement.execute()).thenReturn(true);
 
         Ticket ticket = new Ticket(1, null, null, 1.23, new Date(2021, Calendar.JULY, 3), new Date(2021, Calendar.JULY, 4));
         boolean result = ticketDAOSUT.updateTicket(ticket);

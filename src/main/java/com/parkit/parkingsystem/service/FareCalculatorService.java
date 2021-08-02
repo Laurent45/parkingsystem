@@ -16,14 +16,14 @@ public class FareCalculatorService {
     /**
      * This methode calculate the fare according to the difference between
      * time in and time out.
-     * @param ticket
+     * @param ticket instance of ticket
      */
     public void calculateFare(final Ticket ticket) {
         if ((ticket.getOutTime() == null)
             || (ticket.getOutTime().before(ticket.getInTime()))) {
             throw new IllegalArgumentException(
                     "Out time provided is incorrect:"
-                    + ticket.getOutTime().toString());
+                    + ticket.getOutTime());
         }
 
         long inTimeMilliSec = ticket.getInTime().getTime();
@@ -38,13 +38,15 @@ public class FareCalculatorService {
             switch (ticket.getParkingSpot().getParkingType()) {
                 case CAR:
                     ticket.setPrice(
-                            Precision.round(durationMin / MIN_PER_HOUR, 2)
-                            * Fare.CAR_RATE_PER_HOUR);
+                            Precision.round(
+                                    (durationMin / MIN_PER_HOUR)
+                                    * Fare.CAR_RATE_PER_HOUR, 2));
                     break;
                 case BIKE:
                     ticket.setPrice(
-                            Precision.round(durationMin / MIN_PER_HOUR, 2)
-                            * Fare.BIKE_RATE_PER_HOUR);
+                            Precision.round(
+                                    (durationMin / MIN_PER_HOUR)
+                                    * Fare.BIKE_RATE_PER_HOUR, 2));
                     break;
                 default:
                     throw new IllegalArgumentException("Unkown Parking Type");
@@ -52,7 +54,9 @@ public class FareCalculatorService {
 
             if (ticket.isRecurringUser()) {
                 ticket.setPrice(
-                        ticket.getPrice() * Fare.DISCOUNT_RECURRING_USER);
+                        Precision.round(
+                                ticket.getPrice()
+                                * Fare.DISCOUNT_RECURRING_USER, 2));
             }
         }
     }

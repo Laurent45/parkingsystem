@@ -3,13 +3,14 @@ package com.parkit.parkingsystem.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputReaderUtil {
     /**
      * @see Scanner
      */
-    private static Scanner scan = new Scanner(System.in);
+    private final Scanner scan = new Scanner(System.in, "UTF-8");
     /**
      * @see Logger
      */
@@ -22,8 +23,8 @@ public class InputReaderUtil {
      */
     public int readSelection() {
         try {
-            return Integer.parseInt(scan.nextLine());
-        } catch (Exception e) {
+            return scan.nextInt();
+        } catch (InputMismatchException e) {
             LOGGER.error("Error while reading user input from Shell", e);
             System.out.println(
                     "Error reading input. "
@@ -35,9 +36,8 @@ public class InputReaderUtil {
     /**
      * Read the user vehicle registration number.
      * @return String input user (vehicle registration number)
-     * @throws Exception Error when reading input
      */
-    public String readVehicleRegistrationNumber() throws Exception {
+    public String readVehicleRegistrationNumber() {
         try {
             String vehicleRegNumber = scan.nextLine();
             if (vehicleRegNumber == null

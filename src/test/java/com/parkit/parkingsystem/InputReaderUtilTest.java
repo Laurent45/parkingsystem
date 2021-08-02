@@ -1,26 +1,32 @@
 package com.parkit.parkingsystem;
 
 import com.parkit.parkingsystem.util.InputReaderUtil;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
+
 public class InputReaderUtilTest {
 
-    private static InputReaderUtil inputReaderUtilSUT;
-
-    @BeforeEach
-    public void setUp() {
-        inputReaderUtilSUT = new InputReaderUtil();
-    }
 
     @Test
     public void givenInputInt_whenReadSelection_thenReturnInteger() {
-        int result = 1;
-        assertThat(result).isEqualTo(1);
+        String input = "1";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        InputReaderUtil inputReaderUtilSUT = new InputReaderUtil();
+        assertThat(inputReaderUtilSUT.readSelection()).isEqualTo(1);
+    }
+
+    @Test
+    public void givenBadInput_whenReadSelection_thenReturnNegativeInt() {
+        String input = "a";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        InputReaderUtil inputReaderUtilSUT = new InputReaderUtil();
+        assertThat(inputReaderUtilSUT.readSelection()).isEqualTo(-1);
     }
 }

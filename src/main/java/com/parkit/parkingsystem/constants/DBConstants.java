@@ -12,7 +12,7 @@ public final class DBConstants {
      */
     public static final String GET_NEXT_PARKING_SPOT =
             "select min(PARKING_NUMBER) from parking "
-            + "where AVAILABLE true and TYPE = ?";
+            + "where AVAILABLE = true and TYPE = ?";
 
     /**
      * SQL request that allows to update available to a parking spot.

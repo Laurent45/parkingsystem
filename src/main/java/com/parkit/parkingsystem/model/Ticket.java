@@ -44,12 +44,12 @@ public class Ticket {
 
     /**
      * Constructor with parameters.
-     * @param identify
-     * @param spot
-     * @param vehicleRegistrationNumber
-     * @param priceMoney
-     * @param incomingTime
-     * @param exitTime
+     * @param identify integer
+     * @param spot instance of ParkingSpot
+     * @param vehicleRegistrationNumber vehicle registration number
+     * @param priceMoney price of ticket
+     * @param incomingTime instance of Date
+     * @param exitTime instance of Date
      */
     public Ticket(
             final int identify,
@@ -62,8 +62,8 @@ public class Ticket {
         this.parkingSpot = spot;
         this.vehicleRegNumber = vehicleRegistrationNumber;
         this.price = priceMoney;
-        this.inTime = incomingTime;
-        this.outTime = exitTime;
+        this.inTime = new Date(incomingTime.getTime());
+        this.outTime = new Date(exitTime.getTime());
     }
 
     /**
@@ -76,7 +76,7 @@ public class Ticket {
 
     /**
      * Setter identify.
-     * @param identify
+     * @param identify integer
      */
     public void setId(final int identify) {
         this.id = identify;
@@ -92,7 +92,7 @@ public class Ticket {
 
     /**
      * Setter parking spot.
-     * @param spot
+     * @param spot instance of ParkingSpot
      */
     public void setParkingSpot(final ParkingSpot spot) {
         this.parkingSpot = spot;
@@ -108,7 +108,7 @@ public class Ticket {
 
     /**
      * Setter vehicle registration number.
-     * @param vehicleRegistrationNumber
+     * @param vehicleRegistrationNumber vehicle registration number
      */
     public void setVehicleRegNumber(final String vehicleRegistrationNumber) {
         this.vehicleRegNumber = vehicleRegistrationNumber;
@@ -124,7 +124,7 @@ public class Ticket {
 
     /**
      * Setter price ticket.
-     * @param priceMoney
+     * @param priceMoney price of ticket
      */
     public void setPrice(final double priceMoney) {
         this.price = priceMoney;
@@ -135,15 +135,15 @@ public class Ticket {
      * @return incoming time
      */
     public Date getInTime() {
-        return inTime;
+        return new Date(inTime.getTime());
     }
 
     /**
      * Setter incoming time.
-     * @param incomingTime
+     * @param incomingTime instance of Date
      */
     public void setInTime(final Date incomingTime) {
-        this.inTime = incomingTime;
+        this.inTime = new Date(incomingTime.getTime());
     }
 
     /**
@@ -151,15 +151,15 @@ public class Ticket {
      * @return exit time
      */
     public Date getOutTime() {
-        return outTime;
+        return new Date(outTime.getTime());
     }
 
     /**
      * Setter exit time.
-     * @param timeExit
+     * @param timeExit instance of Date
      */
     public void setOutTime(final Date timeExit) {
-        this.outTime = timeExit;
+        this.outTime = new Date(timeExit.getTime());
     }
 
     /**
@@ -171,7 +171,7 @@ public class Ticket {
     }
     /**
      * Setter recurring user.
-     * @param recurringUserOrNot
+     * @param recurringUserOrNot boolean
      */
     public void setRecurringUser(final boolean recurringUserOrNot) {
         this.recurringUser = recurringUserOrNot;

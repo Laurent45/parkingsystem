@@ -18,8 +18,8 @@ public class DataBaseConfig {
     /**
      * Initialize and get the connection with the DB.
      * @return connection
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws ClassNotFoundException if the class cannot be located
+     * @throws SQLException if there are errors in sql request
      */
     public Connection getConnection()
             throws ClassNotFoundException, SQLException {
@@ -27,13 +27,21 @@ public class DataBaseConfig {
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/prod?serverTimezone=UTC",
-                "root",
-                "rootroot");
+                getUser(),
+                getPassword());
+    }
+
+    private String getPassword() {
+        return "rootroot";
+    }
+
+    private String getUser() {
+        return "root";
     }
 
     /**
      * Close the connection with the DB.
-     * @param con
+     * @param con instance of Connection
      */
     public void closeConnection(final Connection con) {
         if (con != null) {
@@ -48,7 +56,7 @@ public class DataBaseConfig {
 
     /**
      * Close the prepared statement.
-     * @param ps
+     * @param ps instance of PreparedStatement
      */
     public void closePreparedStatement(final PreparedStatement ps) {
         if (ps != null) {
@@ -63,7 +71,7 @@ public class DataBaseConfig {
 
     /**
      * Close the result set.
-     * @param rs
+     * @param rs instance of ResultSet
      */
     public void closeResultSet(final ResultSet rs) {
         if (rs != null) {
