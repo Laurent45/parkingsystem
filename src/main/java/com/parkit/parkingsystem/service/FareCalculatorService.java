@@ -4,6 +4,7 @@ import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.model.Ticket;
 import org.apache.commons.math3.util.Precision;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 public class FareCalculatorService {
@@ -11,7 +12,7 @@ public class FareCalculatorService {
     /**
      * 60 min per hour.
      */
-    public static final int MIN_PER_HOUR = 60;
+    public static final float MIN_PER_HOUR = 60F;
 
     /**
      * This methode calculate the fare according to the difference between
@@ -20,19 +21,18 @@ public class FareCalculatorService {
      */
     public void calculateFare(final Ticket ticket) {
         if ((ticket.getOutTime() == null)
-            || (ticket.getOutTime().before(ticket.getInTime()))) {
+            || (ticket.getOutTime().isBefore(ticket.getInTime()))) {
             throw new IllegalArgumentException(
                     "Out time provided is incorrect:"
                     + ticket.getOutTime());
         }
 
-        long inTimeMilliSec = ticket.getInTime().getTime();
-        long outTimeMilliSec = ticket.getOutTime().getTime();
+        Duration duration = Duration.between(ticket.getInTime()
+                , ticket.getOutTime());
 
         //todo: Some tests are failing here.
         // Need to check if this logic is correct
-        float durationMin = (float) TimeUnit.MILLISECONDS.toMinutes(
-                outTimeMilliSec - inTimeMilliSec);
+        long durationMin = duration.toMinutes();
 
         if (durationMin > Fare.FREE_TIME) {
             switch (ticket.getParkingSpot().getParkingType()) {

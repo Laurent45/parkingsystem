@@ -54,8 +54,8 @@ public class TicketDAO {
             ps.setInt(1, ticket.getParkingSpot().getId());
             ps.setString(2, ticket.getVehicleRegNumber());
             ps.setDouble(3, ticket.getPrice());
-            ps.setTimestamp(4, new Timestamp(
-                    ticket.getInTime().getTime()));
+            ps.setTimestamp(4, Timestamp.valueOf(
+                    ticket.getInTime()));
             ps.setTimestamp(5, null);
             boolean saveT =  ps.execute();
             return saveT;
@@ -95,8 +95,10 @@ public class TicketDAO {
                 ticket.setId(rs.getInt(2));
                 ticket.setVehicleRegNumber(vehicleRegNumber);
                 ticket.setPrice(rs.getDouble(3));
-                ticket.setInTime(rs.getTimestamp(4));
-                ticket.setOutTime(rs.getTimestamp(5));
+                ticket.setInTime(rs.getTimestamp(4)
+                        .toLocalDateTime());
+                ticket.setOutTime(rs.getTimestamp(5) == null ? null :
+                        rs.getTimestamp(5).toLocalDateTime());
             }
             return ticket;
         } catch (Exception ex) {
@@ -121,10 +123,10 @@ public class TicketDAO {
             con = dataBaseConfig.getConnection();
             ps = con.prepareStatement(DBConstants.UPDATE_TICKET);
             ps.setDouble(1, ticket.getPrice());
-            ps.setTimestamp(2, new Timestamp(
-                    ticket.getOutTime().getTime()));
+            ps.setTimestamp(2, Timestamp.valueOf(
+                    ticket.getOutTime()));
             ps.setInt(3, ticket.getId());
-            boolean updateT = ps.execute();
+            boolean updateT = ps.executeUpdate() == 1;
             return updateT;
         } catch (Exception ex) {
             LOGGER.error("Error saving ticket info", ex);

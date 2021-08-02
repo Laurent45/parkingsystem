@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,7 +51,7 @@ public class TicketDAOTest {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.SAVE_TICKET)).thenReturn(mockPrepStatement);
         when(mockPrepStatement.execute()).thenReturn(true);
-        Ticket ticket = new Ticket(1, new ParkingSpot(1, ParkingType.CAR, true), "ABCDEF", 0.00, new Date(), new Date());
+        Ticket ticket = new Ticket(1, new ParkingSpot(1, ParkingType.CAR, true), "ABCDEF", 0.00, LocalDateTime.now(), null);
         boolean result = ticketDAOSUT.saveTicket(ticket);
         verify(mockPrepStatement, times(1)).setInt(anyInt(), anyInt());
         verify(mockPrepStatement, times(1)).setString(anyInt(), anyString());
@@ -84,9 +85,9 @@ public class TicketDAOTest {
     public void givenTicket_whenUpdateTicket_thenReturnTrue() throws SQLException, ClassNotFoundException {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.UPDATE_TICKET)).thenReturn(mockPrepStatement);
-        when(mockPrepStatement.execute()).thenReturn(true);
+        when(mockPrepStatement.executeUpdate()).thenReturn(1);
 
-        Ticket ticket = new Ticket(1, null, null, 1.23, new Date(2021, Calendar.JULY, 3), new Date(2021, Calendar.JULY, 4));
+        Ticket ticket = new Ticket(1, null, null, 1.23, LocalDateTime.now().minusHours(1), LocalDateTime.now());
         boolean result = ticketDAOSUT.updateTicket(ticket);
 
         verify(mockPrepStatement, times(1)).setDouble(anyInt(), anyDouble());

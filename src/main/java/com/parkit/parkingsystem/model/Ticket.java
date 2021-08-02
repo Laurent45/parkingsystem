@@ -1,5 +1,6 @@
 package com.parkit.parkingsystem.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Ticket {
@@ -22,15 +23,15 @@ public class Ticket {
     /**
      * In time fo ticket.
      *
-     * @see Date
+     * @see LocalDateTime
      */
-    private Date inTime;
+    private LocalDateTime inTime;
     /**
      * Out time fo ticket.
      *
-     * @see Date
+     * @see LocalDateTime
      */
-    private Date outTime;
+    private LocalDateTime outTime;
     /**
      * Boolean that represents if the user is a recurring user or not.
      */
@@ -56,14 +57,14 @@ public class Ticket {
             final ParkingSpot spot,
             final String vehicleRegistrationNumber,
             final double priceMoney,
-            final Date incomingTime,
-            final Date exitTime) {
+            final LocalDateTime incomingTime,
+            final LocalDateTime exitTime) {
         this.id = identify;
         this.parkingSpot = spot;
         this.vehicleRegNumber = vehicleRegistrationNumber;
         this.price = priceMoney;
-        this.inTime = new Date(incomingTime.getTime());
-        this.outTime = new Date(exitTime.getTime());
+        this.inTime = incomingTime;
+        this.outTime = exitTime;
     }
 
     /**
@@ -134,32 +135,32 @@ public class Ticket {
      * Getter incoming time.
      * @return incoming time
      */
-    public Date getInTime() {
-        return new Date(inTime.getTime());
+    public LocalDateTime getInTime() {
+        return inTime;
     }
 
     /**
      * Setter incoming time.
      * @param incomingTime instance of Date
      */
-    public void setInTime(final Date incomingTime) {
-        this.inTime = new Date(incomingTime.getTime());
+    public void setInTime(final LocalDateTime incomingTime) {
+        this.inTime = incomingTime;
     }
 
     /**
      * Getter exit time.
      * @return exit time
      */
-    public Date getOutTime() {
-        return new Date(outTime.getTime());
+    public LocalDateTime getOutTime() {
+        return outTime;
     }
 
     /**
      * Setter exit time.
      * @param timeExit instance of Date
      */
-    public void setOutTime(final Date timeExit) {
-        this.outTime = new Date(timeExit.getTime());
+    public void setOutTime(final LocalDateTime timeExit) {
+        this.outTime = timeExit;
     }
 
     /**
