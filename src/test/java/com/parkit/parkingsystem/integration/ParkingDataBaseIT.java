@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
 
-    private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
+    private static final DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
     private static ParkingSpotDAO parkingSpotDAO;
     private static TicketDAO ticketDAO;
     private static DataBasePrepareService dataBasePrepareService;
@@ -41,9 +41,6 @@ public class ParkingDataBaseIT {
 
     @BeforeEach
     private void setUpPerTest() {
-        when(inputReaderUtil.readSelection()).thenReturn(1);
-        when(inputReaderUtil.readVehicleRegistrationNumber())
-                .thenReturn("ABCDEF");
         dataBasePrepareService.clearDataBaseEntries();
     }
 
@@ -54,6 +51,9 @@ public class ParkingDataBaseIT {
 
     @Test
     public void testParkingACar() {
+        when(inputReaderUtil.readSelection()).thenReturn(1);
+        when(inputReaderUtil.readVehicleRegistrationNumber())
+                .thenReturn("ABCDEF");
         ParkingService parkingService = new ParkingService(
                 inputReaderUtil, parkingSpotDAO, ticketDAO);
         parkingService.processIncomingVehicle();
@@ -67,11 +67,11 @@ public class ParkingDataBaseIT {
     }
 
     @Test
-    public void testParkingLotExit() throws InterruptedException {
+    public void testParkingLotExit() {
+        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         ParkingService parkingService = new ParkingService(
                 inputReaderUtil, parkingSpotDAO, ticketDAO);
-        parkingService.processIncomingVehicle();
-        Thread.sleep(1000);
+        dataBasePrepareService.addTicketIncoming();
 
         parkingService.processExitingVehicle();
         //todo: check that the fare generated
