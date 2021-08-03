@@ -47,11 +47,15 @@ public class TicketDAOTest {
     }
 
     @Test
-    public void givenTicket_whenSavedTicket_thenReturnTrue() throws SQLException, ClassNotFoundException {
+    public void givenTicket_whenSavedTicket_thenReturnTrue()
+            throws SQLException, ClassNotFoundException {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.SAVE_TICKET)).thenReturn(mockPrepStatement);
         when(mockPrepStatement.execute()).thenReturn(true);
-        Ticket ticket = new Ticket(1, new ParkingSpot(1, ParkingType.CAR, true), "ABCDEF", 0.00, LocalDateTime.now(), null);
+        Ticket ticket = new Ticket(1
+                , new ParkingSpot(1, ParkingType.CAR, true)
+                , "ABCDEF", 0.00
+                , LocalDateTime.now(), null);
         boolean result = ticketDAOSUT.saveTicket(ticket);
         verify(mockPrepStatement, times(1)).setInt(anyInt(), anyInt());
         verify(mockPrepStatement, times(1)).setString(anyInt(), anyString());
@@ -61,7 +65,8 @@ public class TicketDAOTest {
     }
 
     @Test
-    public void givenVehicleRegNumber_whenGetTicket_thenReturnTicket() throws SQLException, ClassNotFoundException {
+    public void givenVehicleRegNumber_whenGetTicket_thenReturnTicket()
+            throws SQLException, ClassNotFoundException {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.GET_TICKET)).thenReturn(mockPrepStatement);
         when(mockPrepStatement.executeQuery()).thenReturn(mockResultSet);
@@ -75,19 +80,23 @@ public class TicketDAOTest {
 
         assertThat(ticketResult.getId()).isEqualTo(1);
         assertThat(ticketResult.getVehicleRegNumber()).isEqualTo("ABCDEF");
-        assertThat(ticketResult.getParkingSpot()).isEqualTo(new ParkingSpot(1, ParkingType.CAR, false));
+        assertThat(ticketResult.getParkingSpot()).isEqualTo(
+                new ParkingSpot(1, ParkingType.CAR, false));
         assertThat(ticketResult.getPrice()).isEqualTo(1.23);
         assertThat(ticketResult.getInTime()).isNotNull();
         assertThat(ticketResult.getOutTime()).isNotNull();
     }
 
     @Test
-    public void givenTicket_whenUpdateTicket_thenReturnTrue() throws SQLException, ClassNotFoundException {
+    public void givenTicket_whenUpdateTicket_thenReturnTrue()
+            throws SQLException, ClassNotFoundException {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.UPDATE_TICKET)).thenReturn(mockPrepStatement);
         when(mockPrepStatement.executeUpdate()).thenReturn(1);
 
-        Ticket ticket = new Ticket(1, null, null, 1.23, LocalDateTime.now().minusHours(1), LocalDateTime.now());
+        Ticket ticket = new Ticket(1, null, null
+                , 1.23
+                , LocalDateTime.now().minusHours(1), LocalDateTime.now());
         boolean result = ticketDAOSUT.updateTicket(ticket);
 
         verify(mockPrepStatement, times(1)).setDouble(anyInt(), anyDouble());
@@ -97,7 +106,8 @@ public class TicketDAOTest {
     }
 
     @Test
-    public void givenVehicleRegNumber_whenSearchVehicleRegNumber_thenReturnTrue() throws SQLException, ClassNotFoundException {
+    public void givenVehicleRegNumber_whenSearchVehicleRegNumber_thenReturnTrue()
+            throws SQLException, ClassNotFoundException {
         when(mockDataBaseConfig.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(DBConstants.GET_LAST_TICKET_VEHICLE_REG_NUMBER)).thenReturn(mockPrepStatement);
         when(mockPrepStatement.executeQuery()).thenReturn(mockResultSet);

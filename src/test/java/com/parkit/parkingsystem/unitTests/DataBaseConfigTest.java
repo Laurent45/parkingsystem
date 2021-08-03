@@ -13,28 +13,27 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
 public class DataBaseConfigTest {
-
-    @Mock
-    Connection mockConnection;
 
     DataBaseConfig dataBaseConfigSUT = new DataBaseConfig();
 
     @Test
-    public void whenGetConnection_thenReturnConnection() throws SQLException, ClassNotFoundException {
+    public void whenGetConnection_thenReturnConnection()
+            throws SQLException, ClassNotFoundException {
         assertThat(dataBaseConfigSUT.getConnection()).isNotNull();
     }
 
     @Test
-    public void whenCloseConnection_thenConnectionClosed() throws SQLException, ClassNotFoundException {
+    public void whenCloseConnection_thenConnectionClosed()
+            throws SQLException, ClassNotFoundException {
         Connection connection = dataBaseConfigSUT.getConnection();
         dataBaseConfigSUT.closeConnection(connection);
         assertThat(connection.isClosed()).isTrue();
     }
 
     @Test
-    public void whenClosePrepStatement_thenPrepStatementClosed() throws SQLException, ClassNotFoundException {
+    public void whenClosePrepStatement_thenPrepStatementClosed()
+            throws SQLException, ClassNotFoundException {
         Connection connection = dataBaseConfigSUT.getConnection();
         PreparedStatement ps = connection.prepareStatement("SELECT *");
         dataBaseConfigSUT.closePreparedStatement(ps);
@@ -42,7 +41,8 @@ public class DataBaseConfigTest {
     }
 
     @Test
-    public void whenCloseResultSet_thenResultSetClosed() throws SQLException, ClassNotFoundException {
+    public void whenCloseResultSet_thenResultSetClosed()
+            throws SQLException, ClassNotFoundException {
         Connection connection = dataBaseConfigSUT.getConnection();
         ResultSet rs;
         try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM Ticket")) {

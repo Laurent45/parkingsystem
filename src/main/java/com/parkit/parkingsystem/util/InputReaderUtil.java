@@ -19,11 +19,16 @@ public class InputReaderUtil {
 
     /**
      * Read the input user.
+     *
      * @return integer input user
      */
     public int readSelection() {
         try {
-            return scan.nextInt();
+            int read = scan.nextInt();
+            if (scan.hasNext()) {
+                scan.nextLine();
+            }
+            return read;
         } catch (InputMismatchException e) {
             LOGGER.error("Error while reading user input from Shell", e);
             System.out.println(
@@ -35,6 +40,7 @@ public class InputReaderUtil {
 
     /**
      * Read the user vehicle registration number.
+     *
      * @return String input user (vehicle registration number)
      */
     public String readVehicleRegistrationNumber() {

@@ -5,7 +5,6 @@ import com.parkit.parkingsystem.model.Ticket;
 import org.apache.commons.math3.util.Precision;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class FareCalculatorService {
 
@@ -27,13 +26,11 @@ public class FareCalculatorService {
                     + ticket.getOutTime());
         }
 
-        Duration duration = Duration.between(ticket.getInTime()
-                , ticket.getOutTime());
-
+        Duration duration = Duration.between(ticket.getInTime(),
+                ticket.getOutTime());
         //todo: Some tests are failing here.
         // Need to check if this logic is correct
         long durationMin = duration.toMinutes();
-
         if (durationMin > Fare.FREE_TIME) {
             switch (ticket.getParkingSpot().getParkingType()) {
                 case CAR:
