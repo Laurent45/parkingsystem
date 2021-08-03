@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
 
-    private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
+    private static final DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
     private static ParkingSpotDAO parkingSpotDAO;
     private static TicketDAO ticketDAO;
     private static DataBasePrepareService dataBasePrepareService;
@@ -33,16 +33,14 @@ public class ParkingDataBaseIT {
     @BeforeAll
     private static void setUp() {
         parkingSpotDAO = new ParkingSpotDAO();
-        parkingSpotDAO.dataBaseConfig = dataBaseTestConfig;
+        parkingSpotDAO.setDataBaseConfig(dataBaseTestConfig);
         ticketDAO = new TicketDAO();
-        ticketDAO.dataBaseConfig = dataBaseTestConfig;
+        ticketDAO.setDataBaseConfig(dataBaseTestConfig);
         dataBasePrepareService = new DataBasePrepareService();
     }
 
     @BeforeEach
-    private void setUpPerTest() throws Exception {
-        when(inputReaderUtil.readSelection()).thenReturn(1);
-        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+    private void setUpPerTest() {
         dataBasePrepareService.clearDataBaseEntries();
     }
 
@@ -53,21 +51,31 @@ public class ParkingDataBaseIT {
 
     @Test
     public void testParkingACar() {
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        when(inputReaderUtil.readSelection()).thenReturn(1);
+        when(inputReaderUtil.readVehicleRegistrationNumber())
+                .thenReturn("ABCDEF");
+        ParkingService parkingService = new ParkingService(
+                inputReaderUtil, parkingSpotDAO, ticketDAO);
         parkingService.processIncomingVehicle();
-        //TODO: check that a ticket is actualy saved in DB and Parking table is updated with availability
+        //todo: check that a ticket is actually saved in DB
+        // and Parking table is updated with availability
         Ticket ticket = ticketDAO.getTicket("ABCDEF");
         assertNotNull(ticket);
         assertFalse(ticket.getParkingSpot().isAvailable());
-        assertEquals(ticket.getParkingSpot().getId() + 1, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
+        assertEquals(ticket.getParkingSpot().getId()
+                     + 1, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
     }
 
     @Test
     public void testParkingLotExit() {
-        testParkingACar();
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+        ParkingService parkingService = new ParkingService(
+                inputReaderUtil, parkingSpotDAO, ticketDAO);
+        dataBasePrepareService.addTicketIncoming();
+
         parkingService.processExitingVehicle();
-        //TODO: check that the fare generated and out time are populated correctly in the database
+        //todo: check that the fare generated
+        // and out time are populated correctly in the database
         Ticket ticket = ticketDAO.getTicket("ABCDEF");
         assertTrue(ticket.getPrice() >= 0);
         assertNotNull(ticket.getOutTime());
