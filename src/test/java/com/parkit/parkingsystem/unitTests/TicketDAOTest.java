@@ -73,7 +73,7 @@ public class TicketDAOTest {
         when(mockResultSet.next()).thenReturn(true);
         when(mockResultSet.getInt(anyInt())).thenReturn(1);
         when(mockResultSet.getDouble(3)).thenReturn(1.23);
-        when(mockResultSet.getTimestamp(anyInt())).thenReturn(new Timestamp(System.currentTimeMillis()));
+        when(mockResultSet.getTimestamp(4)).thenReturn(new Timestamp(System.currentTimeMillis()));
         when(mockResultSet.getString(6)).thenReturn("CAR");
 
         Ticket ticketResult = ticketDAOSUT.getTicket("ABCDEF");
@@ -84,7 +84,6 @@ public class TicketDAOTest {
                 new ParkingSpot(1, ParkingType.CAR, false));
         assertThat(ticketResult.getPrice()).isEqualTo(1.23);
         assertThat(ticketResult.getInTime()).isNotNull();
-        assertThat(ticketResult.getOutTime()).isNotNull();
     }
 
     @Test

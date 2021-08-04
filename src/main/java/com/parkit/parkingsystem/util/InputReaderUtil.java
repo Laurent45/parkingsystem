@@ -25,7 +25,7 @@ public class InputReaderUtil {
     public int readSelection() {
         try {
             int read = scan.nextInt();
-            if (scan.hasNext()) {
+            if (scan.hasNextLine()){
                 scan.nextLine();
             }
             return read;

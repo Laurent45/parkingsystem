@@ -97,8 +97,6 @@ public class TicketDAO {
                 ticket.setPrice(rs.getDouble(3));
                 ticket.setInTime(rs.getTimestamp(4)
                         .toLocalDateTime());
-                ticket.setOutTime(rs.getTimestamp(5) == null ? null
-                        : rs.getTimestamp(5).toLocalDateTime());
             }
             return ticket;
         } catch (Exception ex) {
