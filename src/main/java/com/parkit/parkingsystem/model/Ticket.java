@@ -59,11 +59,12 @@ public class Ticket {
             final LocalDateTime incomingTime,
             final LocalDateTime exitTime) {
         this.id = identify;
-        this.parkingSpot = spot;
+        this.parkingSpot = new ParkingSpot(spot.getId(), spot.getParkingType(),
+                spot.isAvailable());
         this.vehicleRegNumber = vehicleRegistrationNumber;
         this.price = priceMoney;
-        this.inTime = incomingTime;
-        this.outTime = exitTime;
+        this.inTime = LocalDateTime.from(incomingTime);
+        this.outTime = LocalDateTime.from(exitTime);
     }
 
     /**
@@ -87,7 +88,8 @@ public class Ticket {
      * @return parking spot
      */
     public ParkingSpot getParkingSpot() {
-        return parkingSpot;
+        return new ParkingSpot(parkingSpot.getId(),
+                parkingSpot.getParkingType(), parkingSpot.isAvailable());
     }
 
     /**
@@ -95,7 +97,8 @@ public class Ticket {
      * @param spot instance of ParkingSpot
      */
     public void setParkingSpot(final ParkingSpot spot) {
-        this.parkingSpot = spot;
+        this.parkingSpot = new ParkingSpot(spot.getId(), spot.getParkingType(),
+                spot.isAvailable());
     }
 
     /**
@@ -135,7 +138,7 @@ public class Ticket {
      * @return incoming time
      */
     public LocalDateTime getInTime() {
-        return inTime;
+        return LocalDateTime.from(inTime);
     }
 
     /**
@@ -143,7 +146,7 @@ public class Ticket {
      * @param incomingTime instance of Date
      */
     public void setInTime(final LocalDateTime incomingTime) {
-        this.inTime = incomingTime;
+        this.inTime = LocalDateTime.from(incomingTime);
     }
 
     /**
@@ -151,7 +154,7 @@ public class Ticket {
      * @return exit time
      */
     public LocalDateTime getOutTime() {
-        return outTime;
+        return LocalDateTime.from(outTime);
     }
 
     /**
@@ -159,7 +162,7 @@ public class Ticket {
      * @param timeExit instance of Date
      */
     public void setOutTime(final LocalDateTime timeExit) {
-        this.outTime = timeExit;
+        this.outTime = LocalDateTime.from(timeExit);
     }
 
     /**

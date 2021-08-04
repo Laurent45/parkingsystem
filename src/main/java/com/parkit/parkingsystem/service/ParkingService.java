@@ -20,20 +20,20 @@ public class ParkingService {
     /**
      * @see FareCalculatorService
      */
-    private static FareCalculatorService fareCalculatorService =
+    private final FareCalculatorService fareCalculatorService =
             new FareCalculatorService();
     /**
      * @see InputReaderUtil
      */
-    private InputReaderUtil inputReaderUtil;
+    private final InputReaderUtil inputReaderUtil;
     /**
      * @see ParkingSpot
      */
-    private ParkingSpotDAO parkingSpotDAO;
+    private final ParkingSpotDAO parkingSpotDAO;
     /**
      * @see TicketDAO
      */
-    private TicketDAO ticketDAO;
+    private final TicketDAO ticketDAO;
 
     /**
      * Constructor with parameters.

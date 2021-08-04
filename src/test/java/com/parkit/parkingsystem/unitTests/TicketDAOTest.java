@@ -55,7 +55,7 @@ public class TicketDAOTest {
         Ticket ticket = new Ticket(1
                 , new ParkingSpot(1, ParkingType.CAR, true)
                 , "ABCDEF", 0.00
-                , LocalDateTime.now(), null);
+                , LocalDateTime.now(), LocalDateTime.now());
         boolean result = ticketDAOSUT.saveTicket(ticket);
         verify(mockPrepStatement, times(1)).setInt(anyInt(), anyInt());
         verify(mockPrepStatement, times(1)).setString(anyInt(), anyString());
@@ -94,7 +94,9 @@ public class TicketDAOTest {
         when(mockConnection.prepareStatement(DBConstants.UPDATE_TICKET)).thenReturn(mockPrepStatement);
         when(mockPrepStatement.executeUpdate()).thenReturn(1);
 
-        Ticket ticket = new Ticket(1, null, null
+        Ticket ticket = new Ticket(1
+                , new ParkingSpot(1, ParkingType.CAR, false)
+                , "ABCDEF"
                 , 1.23
                 , LocalDateTime.now().minusHours(1), LocalDateTime.now());
         boolean result = ticketDAOSUT.updateTicket(ticket);
