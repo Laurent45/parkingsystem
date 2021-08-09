@@ -19,6 +19,34 @@ public class TicketDAO {
      */
     private static final Logger LOGGER = LogManager.getLogger("TicketDAO");
     /**
+     * Third parameter of save ticket request sql.
+     */
+    public static final int SAVE_TICKET_3 = 3;
+    /**
+     * Fourth parameter of save ticket request sql.
+     */
+    public static final int SAVE_TICKET_4 = 4;
+    /**
+     * Fifth parameter of save ticket request sql.
+     */
+    public static final int SAVE_TICKET_5 = 5;
+    /**
+     * Sixth parameter of get ticket request sql.
+     */
+    public static final int GET_TICKET_6 = 6;
+    /**
+     * Third parameter of get ticket request sql.
+     */
+    public static final int GET_TICKET_3 = 3;
+    /**
+     * Fourth parameter of get ticket request sql.
+     */
+    public static final int GET_TICKET_4 = 4;
+    /**
+     * Third parameter of update ticket request sql.
+     */
+    public static final int UPDATE_TICKET_3 = 3;
+    /**
      * @see DataBaseConfig
      */
     private DataBaseConfig dataBaseConfig = new DataBaseConfig();
@@ -53,10 +81,10 @@ public class TicketDAO {
                     DBConstants.SAVE_TICKET);
             ps.setInt(1, ticket.getParkingSpot().getId());
             ps.setString(2, ticket.getVehicleRegNumber());
-            ps.setDouble(3, ticket.getPrice());
-            ps.setTimestamp(4, Timestamp.valueOf(
+            ps.setDouble(SAVE_TICKET_3, ticket.getPrice());
+            ps.setTimestamp(SAVE_TICKET_4, Timestamp.valueOf(
                     ticket.getInTime()));
-            ps.setTimestamp(5, null);
+            ps.setTimestamp(SAVE_TICKET_5, null);
             boolean saveT =  ps.execute();
             return saveT;
         } catch (Exception ex) {
@@ -89,13 +117,13 @@ public class TicketDAO {
                 ticket = new Ticket();
                 ParkingSpot parkingSpot = new ParkingSpot(
                         rs.getInt(1),
-                        ParkingType.valueOf(rs.getString(6)),
+                        ParkingType.valueOf(rs.getString(GET_TICKET_6)),
                         false);
                 ticket.setParkingSpot(parkingSpot);
                 ticket.setId(rs.getInt(2));
                 ticket.setVehicleRegNumber(vehicleRegNumber);
-                ticket.setPrice(rs.getDouble(3));
-                ticket.setInTime(rs.getTimestamp(4)
+                ticket.setPrice(rs.getDouble(GET_TICKET_3));
+                ticket.setInTime(rs.getTimestamp(GET_TICKET_4)
                         .toLocalDateTime());
             }
             return ticket;
@@ -123,7 +151,7 @@ public class TicketDAO {
             ps.setDouble(1, ticket.getPrice());
             ps.setTimestamp(2, Timestamp.valueOf(
                     ticket.getOutTime()));
-            ps.setInt(3, ticket.getId());
+            ps.setInt(UPDATE_TICKET_3, ticket.getId());
             boolean updateT = ps.executeUpdate() == 1;
             return updateT;
         } catch (Exception ex) {

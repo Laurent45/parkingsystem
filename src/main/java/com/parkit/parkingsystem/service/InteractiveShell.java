@@ -7,6 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class InteractiveShell {
+    /**
+     * Shutdown the application.
+     */
+    public static final int SHUTDOWN = 3;
 
     private InteractiveShell() {
         throw new IllegalStateException("Utility class");
@@ -42,7 +46,7 @@ public final class InteractiveShell {
                 case 2:
                     parkingService.processExitingVehicle();
                     break;
-                case 3:
+                case SHUTDOWN:
                     System.out.println("Exiting from the system!");
                     continueApp = false;
                     break;
